@@ -1,0 +1,58 @@
+													存储过程
+
+#获取所有用户信息
+建立：create procedure getalluser as select * from userInfo
+使用：exec getalluser
+删除：drop procedure getalluser
+
+#获取所有的板块信息
+建立：create procedure getallsection as select * from sectionInfo
+
+#根据id删除板块信息
+建立：create procedure deletesectionbyid @sId int as delete from sectionInfo where sId = @sId
+备注：在SqlServer中int类型不能指定其长度
+
+#修改板块信息
+建立：create procedure updatesectionbyid (@sName char(20),@sMasterId int,@sId int) as update sectionInfo set sName = @sName,sMasterId = @sMasterId where sId = @sId
+
+#根据当前版块id，获得同一版块下所有主帖的最后一条跟帖记录
+建立：create procedure getsectionlastinfo (@rSid int,@rTid int) as select (select uName from userInfo where userInfo.uId= tb.rUid ) as author,rTopic as title,rPublishTime as publishTime,rTid as tid from (select * from replyInfo where rPublishTime =(select max(rPublishTime) from replyInfo where rSid = @rSid and rTid = @rTid)) as tb
+
+#根据主帖id获得跟帖用户信息的集合
+create procedure selectreplyinfo @tid int as select rTopic,rContents,rPublishTime,rModifyTime,rId,rUid,(select uName from  userInfo where userInfo.uid = replyInfo.ruid) as rName,(select uFace from  userInfo where userInfo.uid = replyInfo.ruid) as rFace,(select uRegTime from  userInfo where userInfo.uid = replyInfo.ruid) as rRegTime,(select uType from  userInfo where userInfo.uid = replyInfo.ruid) as rUserType,(select uSex from  userInfo where userInfo.uid = replyInfo.ruid) as rUsex from replyInfo where rtid in = @tid order by rPublishTime
+
+#添加用户信息
+CREATE procedure proc_adduser--创建存储过程
+--以下muser表所需要的数据
+@username varchar(10), @sex varchar(1), @password varchar(10),
+--以下Student表所需要的数据
+ @uName varchar(20), @uPassword varchar(20), @uRegtime datetime,@uSex varchar(1)
+ as
+ begin
+ declare @uid int--在存储过程中申明变量，用来返回userID
+ insert into muser(username,sex, password)values(@username , @sex , @password )
+ select @@IDENTITY as returnName
+ set @uid=(select @@IDENTITY);--取当前新插入的记录的主键值
+ --在Role-User表中创建该登录用户的角色对应
+ insert into user_role(uid) values(@uid)
+ --在student表中创建用户的基本信息
+ insert into userinfo(uId, uName , uPassword , uSex , uRegTime )
+ values(@uid, @uName , @uPassword , @uSex , @uRegtime)
+ end
+
+													视图
+					
+#根据父板块id获取板块信息
+建立：create view gettopicinfoanduserInfo as select tTopic,tContents,tPublishTime,tModifyTime,tId,tUid,(select uName from  userInfo where userInfo.uId = topicInfo.tuid) as tName,(select uFace from  userInfo where userInfo.uId = topicInfo.tuid) as tFace,(select uRegTime from  userInfo where userInfo.uId = topicInfo.tuid) as tRegTime,(select uType from  userInfo where userInfo.uId = topicInfo.tuid) as tUserType,(select uSex from  userInfo where userInfo.uId = topicInfo.tuid) as tSex from topicInfo
+
+#根据版块id获得版块对应的所有主帖信息（主帖标题、作者、回复数）				
+建立：create view gettopicinfo as select tId,tSId,tTopic,tReplyCount,tPublishTime,(select uName from userInfo where uid = topicInfo.tuid) as tuid from topicInfo
+					
+					
+					
+					
+					
+					
+					
+					
+					

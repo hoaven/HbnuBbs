@@ -1,0 +1,21 @@
+1、sql server 2008附加数据库失败：http://jingyan.baidu.com/article/49ad8bce7219315834d8fa2e.html
+
+2、如何查看sqlserver2008端口号：开始——程序——SQL Server 配置管理器--进入SQL Server Configuration Manager，点击SQL server 网络配置——MSSQLSERVER的协议,选中右边的tcp/ip，右键——属性——点击“IP 地址”的选项卡 TCP端口
+
+3、启动【SQL Server 代理 (MSSQLSERVER)】服务失败1068：http://jingyan.baidu.com/article/84b4f565c1a3e460f6da328b.html
+
+4、启动【SQL Server(MSSQLSERVER)】服务失败126：http://jingyan.baidu.com/article/48206aeaf75234216ad6b38b.html
+
+5、JDBC方式连接SqlServer：http://www.singlex.net/2379.html
+
+6、特别注意：JDBC连接SqlServer2008需要的驱动包版本是sqljdbc4
+
+7、sqlserver2008密匙：http://zhidao.baidu.com/question/510768455.html
+
+8、安装sqlserver2008 重启计算机失败：http://jingyan.baidu.com/album/a24b33cd52a0b919fe002bae.html?picindex=3
+
+9、F8进入安全模式--带命令行的安全模式
+
+10、数据库新建用户名：http://blog.csdn.net/edward_qing_lee/article/details/8783311
+
+11、SQL Server提示不允许保存更改怎么办：http://jingyan.baidu.com/article/0a52e3f419b00dbf62ed72d8.html

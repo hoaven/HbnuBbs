@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib
+END
+com.springsource.org.apache.commons.io-1.4.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/com.springsource.org.apache.commons.io-1.4.0.jar
+END
+org.springframework.asm-3.0.2.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/org.springframework.asm-3.0.2.RELEASE.jar
+END
+standard.jar
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/standard.jar
+END
+com.springsource.org.aopalliance-1.0.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/com.springsource.org.aopalliance-1.0.0.jar
+END
+org.springframework.aop-3.0.2.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/org.springframework.aop-3.0.2.RELEASE.jar
+END
+org.springframework.beans-3.0.2.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/org.springframework.beans-3.0.2.RELEASE.jar
+END
+jstl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/jstl.jar
+END
+org.springframework.expression-3.0.2.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/org.springframework.expression-3.0.2.RELEASE.jar
+END
+com.springsource.org.apache.commons.logging-1.1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/com.springsource.org.apache.commons.logging-1.1.1.jar
+END
+org.springframework.web.servlet-3.0.2.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/org.springframework.web.servlet-3.0.2.RELEASE.jar
+END
+com.springsource.org.apache.commons.fileupload-1.2.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/com.springsource.org.apache.commons.fileupload-1.2.0.jar
+END
+org.springframework.core-3.0.2.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/org.springframework.core-3.0.2.RELEASE.jar
+END
+sqljdbc4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/HbnuBbs/!svn/ver/3/HbnuBbs/WebRoot/WEB-INF/lib/sqljdbc4.jar
+END
+org.springframework.context-3.0.2.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/org.springframework.context-3.0.2.RELEASE.jar
+END
+org.springframework.context.support-3.0.2.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/org.springframework.context.support-3.0.2.RELEASE.jar
+END
+org.springframework.web-3.0.2.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/HbnuBbs/!svn/ver/12/HbnuBbs/WebRoot/WEB-INF/lib/org.springframework.web-3.0.2.RELEASE.jar
+END

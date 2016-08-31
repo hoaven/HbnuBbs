@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/HbnuBbs/!svn/ver/3/HbnuBbs/src/com/servlet
+END
+ServletReg.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/HbnuBbs/!svn/ver/3/HbnuBbs/src/com/servlet/ServletReg.java
+END
+ServletManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/HbnuBbs/!svn/ver/3/HbnuBbs/src/com/servlet/ServletManager.java
+END
+servletDetailPage.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/HbnuBbs/!svn/ver/3/HbnuBbs/src/com/servlet/servletDetailPage.java
+END
+ServletLogin.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/HbnuBbs/!svn/ver/3/HbnuBbs/src/com/servlet/ServletLogin.java
+END
+servletListPage.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/HbnuBbs/!svn/ver/3/HbnuBbs/src/com/servlet/servletListPage.java
+END

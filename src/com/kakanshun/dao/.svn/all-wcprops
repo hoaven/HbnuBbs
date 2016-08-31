@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/HbnuBbs/!svn/ver/19/HbnuBbs/src/com/kakanshun/dao
+END
+SectionInfoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/HbnuBbs/!svn/ver/19/HbnuBbs/src/com/kakanshun/dao/SectionInfoDAO.java
+END
+ReplyInfoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/HbnuBbs/!svn/ver/19/HbnuBbs/src/com/kakanshun/dao/ReplyInfoDAO.java
+END
+CheckDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/HbnuBbs/!svn/ver/19/HbnuBbs/src/com/kakanshun/dao/CheckDAO.java
+END
+UserInfoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/HbnuBbs/!svn/ver/19/HbnuBbs/src/com/kakanshun/dao/UserInfoDAO.java
+END
+CommonDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/HbnuBbs/!svn/ver/7/HbnuBbs/src/com/kakanshun/dao/CommonDAO.java
+END
+TopicInfoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/HbnuBbs/!svn/ver/19/HbnuBbs/src/com/kakanshun/dao/TopicInfoDAO.java
+END
+BaseDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/HbnuBbs/!svn/ver/19/HbnuBbs/src/com/kakanshun/dao/BaseDAO.java
+END

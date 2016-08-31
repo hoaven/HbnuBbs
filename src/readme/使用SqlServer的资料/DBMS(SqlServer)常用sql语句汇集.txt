@@ -1,0 +1,397 @@
+																		数据定义
+1、基本表的定义
+	create table student
+	(
+		userid int primary key,			--设置主键
+		name varchar(20) unique,		--唯一
+		password varchar(20) not null,
+		sex varchar(1) not null default '男'
+		birth datetime，
+		teacher_id int foreign key references teacher(teacherid)
+		
+		--primary key(userid),
+		--foreign key(teacher_id) references teacher(teacherid)
+	)
+	go
+	
+2、表结构的修改
+	alter table student 
+	add remark varchar(30)			--添加属性列
+	go
+	
+	alter table student 
+	alter column remark text		--修改属性列
+	go
+	
+	alter table student 
+	drop column text				--删除属性列
+	go
+
+3、基本表的删除
+	drop table student
+	
+																		数据查询
+
+student(studentnum,studentname,sex,birth,dec)
+elective(studentnum,coursenum,score)
+course(coursenum,coursename,credit)
+1、投影查询
+	select userid,name as studentname,sex,birth from student
+	go
+	
+	select distinct score from elective				--删除重复结果
+	go
+	
+	select coursenum,score+10 from elective
+	go
+	
+2、条件查询
+	select * from student 
+	where sex='男' and (dec='计算机' or dec='外语')
+	go
+	
+	select * from student 
+	where sex='男' and dec in('计算机','外语')			--in来取代多个or运算符
+	go
+	
+	select * from course ··
+	where score between 60 and 100
+	go
+	
+	select * from student where name like '赵%'			--%->0个或多个字符，_->一个字符
+	go
+	
+	select * from course where coursename not like '%数%'
+	go
+	
+	select * from elective where score is null			--空值条件-->is null   非空条件-->is not null
+	go
+
+	select top 3 * from student							--限定返回的记录行数
+	go	
+	
+3、连接查询
+(1)交叉查询
+	select * from student cross join elective			--笛卡儿积
+	go
+	
+(2)内连接查询
+	1）等值连接和非等值连接
+	--查询出分数高于90分的学生的学号、姓名、所在院系
+	select student.num,name,dec from student,elective	--笛卡儿积
+	where student.studentnum=elective.studentnum 		--等值连接
+	and score>80
+	go
+	
+	select student.num,name,dec from student inner join elective
+	on student.studentnum=elective.studentnum 			--等值连接
+	and score>80
+	go
+	
+	--查询出计算机系的学生姓名、课程名和成绩
+	select student.name,course.course.name,elective.score
+	from student,course,elective
+	where student.studentnum=elective.studentnum and elective.coursenum=course.coursenum
+	
+	select student.name,course.course.name,elective.score
+	from student inner join elective
+	on student.studentnum=elective.studentnum inner join course
+	on elective.coursenum=course.coursenum
+	where dec='计算机系'
+	go
+	
+	2）自身连接(要查询的内容均在同一个表内-->基本表和自己进行连接)
+	--查询所有比学号为101001学生的C1课程成绩高的学生学号、课程名、成绩以及学号为101001学生的C1课程的成绩
+	select X.studentnum,X.coursenum,X.score as score_a,Y.score as score_b
+	from elective as X,elective as Y
+	where Y.studentnum='101001' and Y.coursenum='C1'
+	and X.score>Y.score
+	go
+(3)外连接
+	1)左外连接==满足条件的数据行+左表中所有的数据行
+	select student.studentnum,studentname,elective.coursenum
+	from student left outer join elective
+	on student.studentnum=elective.studentnum
+	go
+	
+	2)右外连接==满足条件的数据行+右表中所有的数据行
+	select student.studentnum,studentname,elective.coursenum
+	from elective right outer join student
+	on student.studentnum=elective.studentnum
+	go
+	
+	3)完全外连接==满足条件的数据行+左右表中所有的数据行
+	select student.studentnum,studentname,elective.coursenum
+	from student full outer join elective
+	on student.studentnum=elective.studentnum
+	go
+	
+4、排序查询
+	--查询所有学生选课信息，并先按学号降序排列，再按成绩降序排列
+	select * from elective
+	order by studentnum,score desc			--order by必须出现在其他语句之后   asc-->升序（默认）   desc-->降序
+	go
+	
+5、分组及计算查询
+	--聚合函数：count、sum、avg、max、min
+	--分组:group by
+	--使用了group by，聚集函数则作用于某个组；否则作用于整个表
+	
+	--查询各院系的学生人数
+	select dec,count(*) as dec_count from student
+	group by dec			--分组
+	go
+	
+	--查询每名学生的平均成绩
+	select student,avg(score) as avg_score from elective
+	group by studentnum
+	go
+	
+	--查询总分大于150分的学生的学号及总成绩
+	select studentnum,sum(score) as sum_score from elective
+	group by studentnum
+	having sum(score)>150				--having:要求分组满足某个条件时才检索-->having用来限定分组
+	go
+	
+	--compute可以在结果集内生成小计
+	
+	--查询所有学生的选课信息，并汇总出全体学生的最高成绩和总成绩
+	select studentnum,coursenum,score from elective
+	compute max(score),sum(score)
+	go
+	
+	--查询所有学生的选课信息，并汇总出每个学生的最高成绩和总成绩
+	--compute by子句汇总时必须同时使用order by子句，并且compute by之后出现的列必须与order by子句指出的列顺序相同，
+	--但是可以少于order by子句的列数
+	select studentnum,coursenum,score from elective
+	order by studentnum
+	compute max(score),sum(score) by studentnum			
+	go
+	
+6、子查询(在where子句中包含一个如select-from-where的查询块，此查询块称为子查询或嵌套查询)
+	1）使用in关键字的子查询(有时可以使用连接查询来实现，但是效率会降低)
+	--查询出成绩高于80的学生学号和姓名
+	select studentnum,studentname from student
+	where studentnum in (select studentnum from elective where score>80)
+	go
+	--备注：当子查询的结果返回值是一行的时候，可以使用比较运算符：=,>,<,>=,<=,!=
+	
+	2）使用量词的子查询
+	--any/some-->在进行比较时只要子查询中有一行数据能够使结果为真就行；all-->要求在子查询中的所有行数据都能够使结果为真才行
+	
+	--查询出成绩管理系学生最低成绩的学生的学号和成绩
+	select studentnum,score from elective 
+	where score >any(select score from student,elective
+					where dec='管理' and student.studentnum=elective.studentnum)
+	go
+	
+	--查询出成绩管理系所有学生成绩的学生的学号和成绩
+	select studentnum,score from elective 
+	where score >all(select score from student,elective
+					where dec='管理' and student.studentnum=elective.studentnum)
+	go
+	
+	3）使用exists关键字的子查询
+	--exists用来确定数据是否在查询列表中存在
+	select studentnum,studentname,dec where exists
+	(select * from elective where student.studentnum=elective.studentnum)
+	go
+	
+7、集合查询
+	并操作（union）：将2个或多个查询的结果合并为一个结果集
+	交操作（intersect）：返回左右两个查询结果都有的非重复数据行
+	差操作（except）：返回左查询结果中有且右查询结果没有的非重复数据行
+	--查询选修C1课程并且成绩在80分以上的学生选课信息
+	select * from elective where coursenum='C1'
+	intersect
+	select * from elective where score > 80
+	
+																数据操作
+1、插入数据
+（1）插入单个元组
+	insert into student									--未列出字段则和数据库表中定义的字段及顺序保持一致
+	values('101102','张三','男','1995-02-05','计算机')
+	go
+	
+	insert into student(studentnum,studentname,dec)		--其余未列出的字段在基本表中取空值，并且列出的字段顺序可以和表中定义的字段顺序不一致
+	values('101005','李四','外国语')
+	go
+	
+（2）插入子查询结果
+	--在insert语句中加入子查询后能够将子查询选出的数据插入到指定的基本表中，可以一次插入多行数据。
+	create table avg_score
+	(studentnum char(20) primary key,
+	avg_score int)
+	insert into avg_score
+	select studentnum,avg(score) from elective group by studentnum
+	go
+	
+2、更新数据
+	（1）更新一个元组的值
+	update elective set score=score+20 where studentnum='101002'
+	go
+	
+	（2）更新多个元组的值
+	update elective set score=score+20				--将所有课程成绩加20
+	go
+	
+	（3）带子查询的更新
+	update elective set score = 0 where '计算机'=(select dec from student where student.studentnum=elective.studentnum)
+	go
+	
+3、删除操作
+	（1）删除一个元组
+	delete from student where studentnum='101005'
+	go
+	
+	（2）删除多个元组
+	delete from elective			--删除所有学生的选课记录
+	go
+	
+	（3）删除子查询的结果
+	delete from elective where '外语'=(select dec from where student.studentnum=elective.studentnum)
+	go
+	
+															视图（外模式）
+1、视图的介绍
+	视图就是一张虚表，是从一个或几个基本表（或视图）导出的表，视图所对应的数据并不实际地以视图结构存储在数据库中。
+	当基本表中的数据发生变化时，从视图中查询出来的数据也会随之改变，同样，当对通过视图看到的数据进行修改时，相应的
+	基本表的数据也会发生相应的变化。
+	
+2、视图的建立
+	--根据版块id获得版块对应的所有主帖信息（主帖标题、作者、回复数）				
+	create view gettopicinfo								--视图的属性列名省略则由子查询中select目标列种的诸字段组成
+	as select tId,tSId,tTopic,tReplyCount,tPublishTime,
+	(select uName from userInfo where uid = topicInfo.tuid) as tuid from topicInfo
+	go
+	--以下情况需要明确的指明视图的属性列名
+	1）某个目标列是聚集函数或列表达式
+	2）目标列为select *
+	3）多表连接时选出了几个同名列作为视图的字段
+	4）需要在视图中为某个列启用新的名字
+	
+	--备注：with check option子句迫使通过视图执行的所有数据修改语句必须符合视图中定义中设置的条件
+	
+3、视图的修改
+	alter view ... as select ...(把视图的定义中的create换成alter)
+	
+4、视图的使用
+	select * from gettopicinfo where tsid = 8 order by tPublishTime desc
+	go
+	
+5、视图的删除
+	drop view gettopicinfo
+	go
+	
+															存储过程
+--获取所有用户信息
+建立：create procedure getalluser as select * from userInfo
+使用：exec getalluser
+删除：drop procedure getalluser
+
+--获取所有的板块信息
+建立：create procedure getallsection as select * from sectionInfo
+
+--根据id删除板块信息
+建立：create procedure deletesectionbyid @sId int as delete from sectionInfo where sId = @sId
+备注：在SqlServer中int类型不能指定其长度
+
+--修改板块信息
+建立：create procedure updatesectionbyid (@sName char(20),@sMasterId int,@sId int) as update sectionInfo set 
+											sName = @sName,sMasterId = @sMasterId where sId = @sId
+使用：exec updatesectionbyid kakanshun,3,6
+	  go
+备注：如果是@sName是date类型，则传入的时候直接'2015-08-02'--加上''在sqlserver中会自动向sql.date转换(如果在java中这个字符串
+																				可以被转为util.date则数据库中转换不会出错)
+																				
+--典型例子
+--存储过程：创建用户信息，同时操作三张用户相关表
+CREATE PROCEDURE Create_New_HealthManager
+(
+    --以下为EC_user表所需参数
+	   @Username varchar(50),
+	   @Password varchar(50),
+	   @Email nvarchar(128),
+	   @Question nvarchar(40),
+	   @Answer nvarchar(40),
+	   @IsApproved bit,
+	
+	--以下为Mdx_Health_Manage表所需参数
+	@healthManageName varchar(64),
+	@sex bit,
+	@workUint int,
+	@provinceId int,
+	@cityId int,
+	@areaId int,
+	@photo varchar(64),
+	@mobole varchar(32),
+	@position smallint
+	)
+	AS
+BEGIN	
+	--SET NOCOUNT ON;	
+	-- 在EC-user表中创建登录用户
+    declare @uid int;
+    Insert Into EC_User(username,PASSWORD,USERFLAG,EMAIL,QUESTION,ANSWER,CREATEDATE,MODIFYDATE, APPLICATIONNAME,ISAPPROVED,LASTACTIVITYDATE,LASTLOGINDATE,LASTPASSWORDCHANGEDDATE,ISONLINE,LASTLOCKEDOUTDATE,FailedPasswordAttemptCount,FailedPasswordAttemptWindowStart,FailedPasswordAnswerAttemptCount,FailedPasswordAnswerAttemptWindowStart)  
+           values (@Username,@Password,'0',@Email,@Question,@Answer,getdate(),getdate(),'/',@IsApproved,getdate(),getdate(),getdate(),'1',getdate(),0,getdate(),0,getdate())SELECT @@IDENTITY AS returnName;     --返回插入记录的id
+    set @uid = (select @@identity);  --取当前新插入的记录的主键值（IDENTITY 是数据库关键字，使用时必须用2个@）
+    
+    -- 在EC-userinrole表中创建该登录用户的角色对应
+     insert into EC_Userinrole(Userid,Roleid,Applicationname) values (@uid,(select roleid from EC_Role where RoleName='健康管理师'),'/');
+     
+    -- 在Mdx_Health_Manage创建医生的附加信息
+    INSERT INTO mdx_health_manage ([healthManageId],[loginName], [healthManageName], [sex], [workUint], [provinceId], [cityId], [areaId], [photo], [mobole], [email], [position], [createTime]) 
+           VALUES (@uid,@Username, @healthManageName, @sex, @workUint, @provinceId, @cityId, @areaId, @photo, @mobole, @Email, @position, getdate())
+END
+
+--存储过程：更新用户信息，同时操作二张用户相关表
+CREATE PROCEDURE usp_update_health_manager
+(
+    --以下为EC_user表所需参数
+	   @original_userid int,
+	   @Email nvarchar(128),
+	   @Question nvarchar(40),
+	   @Answer nvarchar(40),
+	@MODIFYDATE datetime,
+	
+	--以下为mdx_health_manage表所需参数
+	@healthManageName varchar(64),
+	@sex bit,
+	@provinceId int,
+	@cityId int,
+	@areaId int,
+	@workUint int,
+	@photo varchar(64),
+	@mobole varchar(32),
+	@position smallint
+	)
+	AS
+BEGIN	
+	-- 更新EC-user表中登录用户名（username）
+   UPDATE EC_user 
+   SET  
+   [Email]=@Email,Question=@Question,Answer=@Answer,MODIFYDATE=@MODIFYDATE
+   WHERE (([Userid] = @original_userid))
+    
+    -- 更新mdx_health_manage信息
+ UPDATE mdx_health_manage
+ SET [healthManageName] = @healthManageName, [sex] = @sex, [workUint] = @workUint, 
+ [provinceId] = @provinceId, [cityId] = @cityId, [areaId] = @areaId,photo=@photo, [mobole] = @mobole, 
+ [email] = @email, [position] = @position
+ WHERE (([healthManageId] = @original_userid))
+END
+--存储过程：删除用户信息，同时操作三张用户相关表
+CREATE PROCEDURE usp_deleteHealthManage
+@original_Userid int
+as
+begin
+ --删除项目和健康管理师关系子表
+ delete from mdx_health_manage  where healthManageId =@original_Userid;
+ --删除项目和健康管理师关系子表
+ delete from EC_Userinrole where  Userid =@original_Userid ;
+ --删除项目和事件关联的子表
+ delete from EC_User where Userid =@original_Userid; 
+end
+
+	
+	

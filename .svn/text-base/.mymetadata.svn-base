@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="HbnuBbs"
+  id="myeclipse.1259476399901"
+  context-root="/HbnuBbs"
+  j2ee-spec="5.0"
+  archive="HbnuBbs.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
